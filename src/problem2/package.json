@@ -5,6 +5,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "token-icons": "github:Switcheo/token-icons",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
