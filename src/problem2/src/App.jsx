@@ -1,9 +1,9 @@
-import CurrencySwapForm from './components/CurrencySwapForm'
+import CurrencyExchangeForm from './components/CurrencyExchangeForm'
 
 export default function App() {
   return (
     <div className="app-container">
-      <CurrencySwapForm />
+      <CurrencyExchangeForm />
     </div>
   )
 }
