@@ -58,8 +58,8 @@ GET /api/leaderboard
 
 ```json
 [
-  { "userId": "string", "score": number },
-  ... up to 10 records ...
+  { "userId": "string", "score": number }
+  // …up to 10 entries in total
 ]
 ```
 
@@ -104,10 +104,11 @@ CREATE TABLE user_scores (
 ---
 
 ## Error Handling
-- Return structured JSON errors:
-  ```json
-  { "error": "Unauthorized", "message": "Invalid token." }
-````
+
+- Return structured JSON errors, e.g.:  
+    ```json
+    { "error": "Unauthorized", "message": "Invalid token." }
+    ```
 
 - Log all failed attempts and unusual spikes for security auditing.
 
