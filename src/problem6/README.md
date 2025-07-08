@@ -99,8 +99,6 @@ CREATE TABLE user_scores (
 
 - \`CREATE INDEX idx\_score\_desc ON user\_scores(score DESC);
 
-````
-
 ---
 
 ## Error Handling
