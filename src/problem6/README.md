@@ -58,7 +58,7 @@ GET /api/leaderboard
 
 ```json
 [
-  { "userId": "string", "score": number }
+  { "userId": "user123", "score": 42 }
   // …up to 10 entries in total
 ]
 ```
