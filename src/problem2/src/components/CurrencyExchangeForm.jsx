@@ -7,7 +7,9 @@ function LazyIcon({ currency }) {
   const [src, setSrc] = useState(null)
   useEffect(() => {
     if (currency) {
-      const key = Object.keys(loaders).find(path => path.endsWith(`/${currency}.svg`))
+      const key = Object.keys(loaders).find(path =>
+        path.endsWith(`/${currency}.svg`)
+      )
       if (key) {
         loaders[key]().then(module => setSrc(module.default || module))
       } else {
@@ -48,17 +50,48 @@ export default function CurrencyExchangeForm() {
   const handleSubmit = e => {
     e.preventDefault()
     setError('')
-    if (!fromCurrency || !toCurrency || !amount || isNaN(amount)) {
-      setError('Please select currencies and enter a valid amount.')
+    if (!fromCurrency) {
+      setError('Please select a “From” currency.')
+      return
+    }
+    if (!toCurrency) {
+      setError('Please select a “To” currency.')
+      return
+    }
+    if (!amount) {
+      setError('Please enter an amount to exchange.')
+      return
+    }
+    if (isNaN(amount)) {
+      setError('Amount must be a number.')
+      return
+    }
+    if (Number(amount) <= 0) {
+      setError('Amount must be greater than zero.')
+      return
+    }
+    if (fromCurrency === toCurrency) {
+      setError('Please choose two different currencies.')
       return
     }
     setLoading(true)
     setTimeout(() => {
-      const exchanged = exchangeCurrency(fromCurrency, toCurrency, amount, prices).toFixed(6)
+      const exchanged = exchangeCurrency(
+        fromCurrency,
+        toCurrency,
+        amount,
+        prices
+      ).toFixed(6)
       setResult(exchanged)
       setExchangedTo(toCurrency)
       setLoading(false)
     }, 800)
+  }
+
+  const flipCurrencies = () => {
+    const oldFrom = fromCurrency
+    setFromCurrency(toCurrency)
+    setToCurrency(oldFrom)
   }
 
   return (
@@ -67,31 +100,59 @@ export default function CurrencyExchangeForm() {
       {error && <p className="error">{error}</p>}
 
       <div className="field">
-        <label htmlFor="fromCurrency">From:</label>
-        <LazyIcon currency={fromCurrency} />
-        <select id="fromCurrency" value={fromCurrency} onChange={e => setFromCurrency(e.target.value)}>
-          <option value="">-- select currency --</option>
+        <select
+          id="fromCurrency"
+          value={fromCurrency}
+          onChange={e => setFromCurrency(e.target.value)}
+        >
+          <option value="" disabled hidden>-- select currency --</option>
           {currencies.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
+        <label htmlFor="fromCurrency">From Currency</label>
+        <div className="field-icon">
+          <LazyIcon currency={fromCurrency} />
+        </div>
+      </div>
+
+      <div className="swap-flip" onClick={flipCurrencies}>
+        ↔️
       </div>
 
       <div className="field">
-        <label htmlFor="toCurrency">To:</label>
-        <LazyIcon currency={toCurrency} />
-        <select id="toCurrency" value={toCurrency} onChange={e => setToCurrency(e.target.value)}>
-          <option value="">-- select currency --</option>
+        <select
+          id="toCurrency"
+          value={toCurrency}
+          onChange={e => setToCurrency(e.target.value)}
+        >
+          <option value="" disabled hidden>-- select currency --</option>
           {currencies.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
+        <label htmlFor="toCurrency">To Currency</label>
+        <div className="field-icon">
+          <LazyIcon currency={toCurrency} />
+        </div>
       </div>
 
       <div className="field">
-        <label htmlFor="amount">Amount:</label>
-        <input id="amount" type="text" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" />
+        <input
+          id="amount"
+          type="text"
+          value={amount}
+          onChange={e => setAmount(e.target.value)}
+          placeholder=" "
+        />
+        <label htmlFor="amount">Amount</label>
       </div>
 
-      <button type="submit" disabled={loading}>{loading ? 'Loading...' : 'Exchange'}</button>
+      <button type="submit" disabled={loading}>
+        {loading ? 'Exchanging...' : 'Exchange'}
+      </button>
 
-      {result && <p className="result">Result: {result} {exchangedTo}</p>}
+      {result !== null && (
+        <p className="result">
+          Result: {result} {exchangedTo}
+        </p>
+      )}
     </form>
   )
 }

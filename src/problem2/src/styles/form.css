@@ -1,40 +1,116 @@
 .exchange-form {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  width: 320px;
-  font-family: sans-serif;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 24px;
+  width: 360px;
+  font-family: 'Segoe UI', sans-serif;
 }
-.exchange-form h2 { margin-top: 0; }
+
+.exchange-form h2 {
+  margin-bottom: 16px;
+  font-size: 1.75rem;
+  color: #333;
+  text-align: center;
+}
+
 .exchange-form .field {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
+  position: relative;
+  margin-bottom: 2rem;
 }
-.exchange-form .field img {
+
+.exchange-form .field select,
+.exchange-form .field input {
+  width: 100%;
+  padding: 12px;
+  padding-right: 40px; /* space for the icon */
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  appearance: none;
+  transition: border-color 0.2s;
+}
+
+.exchange-form .field select:focus,
+.exchange-form .field input:focus {
+  outline: none;
+  border-color: #3366ff;
+}
+
+.exchange-form .field label {
+  position: absolute;
+  left: 14px;
+  top: -8px;
+  transform: none;
+  background: #fff;
+  padding: 0 4px;
+  color: #777;
+  font-size: 0.85rem;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.exchange-form .field input:not(:placeholder-shown) + label,
+.exchange-form .field input:focus + label {
+  top: -8px;
+  color: #3366ff;
+}
+
+.exchange-form .field select + label {
+  top: -8px;
+  color: #777;
+}
+
+/* Icon container, overlaid on the right */
+.exchange-form .field-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.exchange-form .field-icon img {
   width: 24px;
   height: 24px;
-  margin-right: 8px;
 }
-.exchange-form label {
-  flex: 1 0 80px;
-}
-.exchange-form select, .exchange-form input {
-  flex: 2 0 auto;
-  padding: 6px;
-  box-sizing: border-box;
-}
+
+/* Button styling */
 .exchange-form button {
-  margin-top: 15px;
   width: 100%;
-  padding: 10px;
-  background: #007bff;
-  color: white;
+  padding: 14px;
+  font-size: 1.2rem;
+  background: #3366ff;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s;
 }
-.exchange-form button:disabled { background: #aaa; cursor: default; }
-.exchange-form .error { color: #c00; margin-bottom: 12px; }
-.exchange-form .result { margin-top: 15px; background: #e6ffe6; padding: 10px; border-radius: 4px; text-align: center; }
+
+.exchange-form button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.exchange-form button:not(:disabled):hover {
+  background: #254eda;
+}
+
+.exchange-form .error {
+  color: #c62828;
+  background: #ffebee;
+  border: 1px solid #ef9a9a;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin: 0 0 16px;
+}
+
+/* Swap-flip button styling */
+.exchange-form .swap-flip {
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
